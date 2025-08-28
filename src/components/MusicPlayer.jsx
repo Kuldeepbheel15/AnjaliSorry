@@ -1,26 +1,28 @@
-"use client"
-
-import { useRef, useEffect } from "react"
-import { motion } from "framer-motion"
-import { Volume2, VolumeX } from "lucide-react"
+"use client";
+import { useRef, useEffect } from "react";
+import { motion } from "framer-motion";
+import { Volume2, VolumeX } from "lucide-react";
 
 export default function MusicPlayer({ musicPlaying, setMusicPlaying }) {
-  const audioRef = useRef(null)
+  const audioRef = useRef(null);
 
   useEffect(() => {
     if (audioRef.current) {
-      // audioRef.current.volume = 0.5; // Adjust the song volume here
       if (musicPlaying) {
-        audioRef.current.play().catch(console.error)
+        audioRef.current.play().catch(console.error);
       } else {
-        audioRef.current.pause()
+        audioRef.current.pause();
       }
     }
-  }, [musicPlaying])
+  }, [musicPlaying]);
 
   const toggleMusic = () => {
-    setMusicPlaying(!musicPlaying)
-  }
+    setMusicPlaying(!musicPlaying);
+  };
+
+  const handleAudioError = (event) => {
+    console.error("Audio error:", event);
+  };
 
   return (
     <motion.div
@@ -37,11 +39,14 @@ export default function MusicPlayer({ musicPlaying, setMusicPlaying }) {
       >
         {musicPlaying ? <Volume2 size={20} /> : <VolumeX size={20} />}
       </motion.button>
-
-      {/* Change the audio source to original one */}
-      <audio ref={audioRef} loop preload="auto">
-        <source src="/audio/bg.mp3" type="audio/wav" />
+      <audio
+        ref={audioRef}
+        loop
+        preload="auto"
+        onError={handleAudioError}
+      >
+        <source src="/audio/bg.mp3" type="audio/mpeg" />
       </audio>
     </motion.div>
-  )
+  );
 }
