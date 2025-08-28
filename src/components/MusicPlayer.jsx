@@ -1,34 +1,44 @@
 "use client";
-import { useRef, useState } from "react";
+import { useRef, useState, useEffect } from "react";
+import { motion } from "framer-motion";
+import { Volume2, VolumeX } from "lucide-react";
 
 export default function MusicPlayer() {
-  const [musicPlaying, setMusicPlaying] = useState(false);
+  const [musicPlaying, setMusicPlaying] = useState(true);
   const audioRef = useRef(null);
 
-  const playMusic = () => {
+  useEffect(() => {
     if (audioRef.current) {
-      audioRef.current.play().catch((error) => {
-        console.error("Error playing audio:", error);
-      });
-      setMusicPlaying(true);
+      if (musicPlaying) {
+        audioRef.current.play().catch(console.error);
+      } else {
+        audioRef.current.pause();
+      }
     }
-  };
+  }, [musicPlaying]);
 
-  const pauseMusic = () => {
-    if (audioRef.current) {
-      audioRef.current.pause();
-      setMusicPlaying(false);
-    }
+  const toggleMusic = () => {
+    setMusicPlaying(!musicPlaying);
   };
 
   return (
-    <div>
-      <button onClick={musicPlaying ? pauseMusic : playMusic}>
-        {musicPlaying ? "Pause" : "Play"}
-      </button>
-      <audio ref={audioRef}>
+    <motion.div
+      initial={{ opacity: 0, scale: 0 }}
+      animate={{ opacity: 1, scale: 1 }}
+      transition={{ duration: 0.5, delay: 0.3 }}
+      className="fixed top-4 right-4 z-50"
+    >
+      <motion.button
+        onClick={toggleMusic}
+        className="bg-pink-500/20 backdrop-blur-sm border border-pink-300/30 rounded-full p-3 text-pink-200 hover:bg-pink-500/30 transition-all duration-300"
+        whileHover={{ scale: 1.1 }}
+        whileTap={{ scale: 0.9 }}
+      >
+        {musicPlaying ? <Volume2 size={20} /> : <VolumeX size={20} />}
+      </motion.button>
+      <audio ref={audioRef} loop preload="auto">
         <source src="/audio/bg.mp3" type="audio/mpeg" />
       </audio>
-    </div>
+    </motion.div>
   );
 }
