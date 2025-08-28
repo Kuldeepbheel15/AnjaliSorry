@@ -49,12 +49,16 @@ export default function LetterPage({ setCurrentPage }) {
                   {/* Save the photos with name like 1.jpg, 2.jpg ... and change the src to this - /images/${i}.jpg */}
                   <img
                     src={`/images/1.jpg`}
-                    src={`/images/2.jpg`}
-                    src={`/images/3.jpg`}
-                    src={`/images/4.jpg`}
-                    src={`/images/5.jpg`}
                     alt={`Beautiful memory ${i}`}
-                    className="w-full h-36 object-cover"
+                    className="w-full h-36
+                    
+                    src={`/images/2.jpg`}
+                    alt={`Beautiful memory ${i}`}
+                    className="w-full h-36
+                    
+                    src={`/images/3.jpg`}
+                    alt={`Beautiful memory ${i}`}
+                    className="w-full h-36  object-cover"
                   />
 
                   {/* Cute corner decorations */}
