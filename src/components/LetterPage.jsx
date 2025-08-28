@@ -50,14 +50,6 @@ export default function LetterPage({ setCurrentPage }) {
                   <img
                     src={`/images/1.jpg`}
                     alt={`Beautiful memory ${i}`}
-                    className="w-full h-36
-                    
-                    src={`/images/2.jpg`}
-                    alt={`Beautiful memory ${i}`}
-                    className="w-full h-36
-                    
-                    src={`/images/3.jpg`}
-                    alt={`Beautiful memory ${i}`}
                     className="w-full h-36  object-cover"
                   />
 
