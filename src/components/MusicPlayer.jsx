@@ -1,25 +1,44 @@
-"use client";
-import { useRef, useState, useEffect } from "react";
-import { motion } from "framer-motion";
-import { Volume2, VolumeX } from "lucide-react";
+"use client"
+
+import { useRef, useEffect, useState } from "react"
+import { motion } from "framer-motion"
+import { Volume2, VolumeX } from "lucide-react"
 
 export default function MusicPlayer() {
-  const [musicPlaying, setMusicPlaying] = useState(true);
-  const audioRef = useRef(null);
+  const audioRef = useRef(null)
+  const [musicPlaying, setMusicPlaying] = useState(true)
+
+  useEffect(() => {
+    const audio = audioRef.current
+
+    if (!audio) return
+
+    const playAudio = async () => {
+      try {
+        await audio.play()
+        setMusicPlaying(true)
+      } catch (err) {
+        console.error("Autoplay failed:", err)
+        setMusicPlaying(false)
+      }
+    }
+
+    playAudio()
+  }, [])
 
   useEffect(() => {
     if (audioRef.current) {
       if (musicPlaying) {
-        audioRef.current.play().catch(console.error);
+        audioRef.current.play().catch(console.error)
       } else {
-        audioRef.current.pause();
+        audioRef.current.pause()
       }
     }
-  }, [musicPlaying]);
+  }, [musicPlaying])
 
   const toggleMusic = () => {
-    setMusicPlaying(!musicPlaying);
-  };
+    setMusicPlaying((prev) => !prev)
+  }
 
   return (
     <motion.div
@@ -36,9 +55,11 @@ export default function MusicPlayer() {
       >
         {musicPlaying ? <Volume2 size={20} /> : <VolumeX size={20} />}
       </motion.button>
+
       <audio ref={audioRef} loop preload="auto">
         <source src="/audio/bg.mp3" type="audio/mpeg" />
+        Your browser does not support the audio element.
       </audio>
     </motion.div>
-  );
+  )
 }
