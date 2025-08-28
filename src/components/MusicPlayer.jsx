@@ -10,7 +10,9 @@ export default function MusicPlayer() {
   useEffect(() => {
     if (audioRef.current) {
       if (musicPlaying) {
-        audioRef.current.play().catch(console.error);
+        audioRef.current.play().catch((error) => {
+          console.error("Error playing audio:", error);
+        });
       } else {
         audioRef.current.pause();
       }
@@ -19,6 +21,10 @@ export default function MusicPlayer() {
 
   const toggleMusic = () => {
     setMusicPlaying(!musicPlaying);
+  };
+
+  const handleAudioError = (event) => {
+    console.error("Audio error:", event);
   };
 
   return (
@@ -36,7 +42,13 @@ export default function MusicPlayer() {
       >
         {musicPlaying ? <Volume2 size={20} /> : <VolumeX size={20} />}
       </motion.button>
-      <audio ref={audioRef} loop preload="auto">
+      <audio
+        ref={audioRef}
+        loop
+        preload="auto"
+        autoplay={musicPlaying}
+        onError={handleAudioError}
+      >
         <source src="/audio/bg.mp3" type="audio/mpeg" />
       </audio>
     </motion.div>
