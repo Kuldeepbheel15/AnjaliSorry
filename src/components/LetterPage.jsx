@@ -49,6 +49,10 @@ export default function LetterPage({ setCurrentPage }) {
                   {/* Save the photos with name like 1.jpg, 2.jpg ... and change the src to this - /images/${i}.jpg */}
                   <img
                     src={`/images/1.jpg`}
+                    src={`/images/2.jpg`}
+                    src={`/images/3.jpg`}
+                    src={`/images/4.jpg`}
+                    src={`/images/5.jpg`}
                     alt={`Beautiful memory ${i}`}
                     className="w-full h-36 object-cover"
                   />
@@ -164,7 +168,7 @@ export default function LetterPage({ setCurrentPage }) {
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 2.5, duration: 0.8 }}
         >
-          I need you...
+          Continue reading..
         </motion.button>
       </motion.div>
     </div>
