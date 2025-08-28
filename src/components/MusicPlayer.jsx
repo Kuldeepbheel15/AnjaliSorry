@@ -4,16 +4,8 @@ import { motion } from "framer-motion";
 import { Volume2, VolumeX } from "lucide-react";
 
 export default function MusicPlayer() {
-  const [musicPlaying, setMusicPlaying] = useState(true);
+  const [musicPlaying, setMusicPlaying] = useState(false);
   const audioRef = useRef(null);
-
-  const handleAudioCanPlay = () => {
-    if (musicPlaying) {
-      audioRef.current.play().catch((error) => {
-        console.error("Error playing audio:", error);
-      });
-    }
-  };
 
   const toggleMusic = () => {
     setMusicPlaying(!musicPlaying);
@@ -47,13 +39,7 @@ export default function MusicPlayer() {
       >
         {musicPlaying ? <Volume2 size={20} /> : <VolumeX size={20} />}
       </motion.button>
-      <audio
-        ref={audioRef}
-        loop
-        preload="auto"
-        onCanPlay={handleAudioCanPlay}
-        onError={handleAudioError}
-      >
+      <audio ref={audioRef} loop preload="auto" onError={handleAudioError}>
         <source src="/audio/bg.mp3" type="audio/mpeg" />
       </audio>
     </motion.div>
