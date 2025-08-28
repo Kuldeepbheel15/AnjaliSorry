@@ -1,9 +1,10 @@
 "use client";
-import { useRef, useEffect } from "react";
+import { useRef, useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { Volume2, VolumeX } from "lucide-react";
 
-export default function MusicPlayer({ musicPlaying, setMusicPlaying }) {
+export default function MusicPlayer() {
+  const [musicPlaying, setMusicPlaying] = useState(true);
   const audioRef = useRef(null);
 
   useEffect(() => {
@@ -18,10 +19,6 @@ export default function MusicPlayer({ musicPlaying, setMusicPlaying }) {
 
   const toggleMusic = () => {
     setMusicPlaying(!musicPlaying);
-  };
-
-  const handleAudioError = (event) => {
-    console.error("Audio error:", event);
   };
 
   return (
@@ -39,12 +36,7 @@ export default function MusicPlayer({ musicPlaying, setMusicPlaying }) {
       >
         {musicPlaying ? <Volume2 size={20} /> : <VolumeX size={20} />}
       </motion.button>
-      <audio
-        ref={audioRef}
-        loop
-        preload="auto"
-        onError={handleAudioError}
-      >
+      <audio ref={audioRef} loop preload="auto">
         <source src="/audio/bg.mp3" type="audio/mpeg" />
       </audio>
     </motion.div>
