@@ -8,14 +8,24 @@ export default function MusicPlayer() {
   const audioRef = useRef(null);
 
   useEffect(() => {
-    if (audioRef.current) {
-      if (musicPlaying) {
+    const playAudio = () => {
+      if (audioRef.current && musicPlaying) {
         audioRef.current.play().catch((error) => {
           console.error("Error playing audio:", error);
         });
-      } else {
-        audioRef.current.pause();
       }
+    };
+
+    const timeoutId = setTimeout(playAudio, 1000); // Play audio after 1 second
+
+    return () => {
+      clearTimeout(timeoutId);
+    };
+  }, [musicPlaying]);
+
+  useEffect(() => {
+    if (audioRef.current && !musicPlaying) {
+      audioRef.current.pause();
     }
   }, [musicPlaying]);
 
@@ -42,13 +52,7 @@ export default function MusicPlayer() {
       >
         {musicPlaying ? <Volume2 size={20} /> : <VolumeX size={20} />}
       </motion.button>
-      <audio
-        ref={audioRef}
-        loop
-        preload="auto"
-        autoplay={musicPlaying}
-        onError={handleAudioError}
-      >
+      <audio ref={audioRef} loop preload="auto" onError={handleAudioError}>
         <source src="/audio/bg.mp3" type="audio/mpeg" />
       </audio>
     </motion.div>
